@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vaibhav's Desk Setup</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+:root{--cream:#F5EFE4;--beige:#EDE3D0;--ww:#FAF7F2;--bd:#2C1810;--bm:#5C3D2E;--bl:#8B6347;--om:#C4622D;--os:#E8845A;--sand:#D4B896;--fd:"Playfair Display",serif;--fb:"DM Sans",sans-serif;--fm:"DM Mono",monospace;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:var(--fb);background:var(--ww);color:var(--bd);overflow-x:hidden;}
+#hero{min-height:100vh;background:var(--bd) url('landscape.png') center/cover no-repeat;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:2rem;position:relative;overflow:hidden;}
+#hero::before{content:"";position:absolute;inset:0;background:linear-gradient(rgba(28,18,12,0.55),rgba(28,18,12,0.35));backdrop-filter:blur(4px);pointer-events:none;}
+.eyebrow{font-family:var(--fm);font-size:.7rem;letter-spacing:.3em;color:var(--os);text-transform:uppercase;margin-bottom:1.5rem;opacity:0;animation:fu .8s .2s forwards;}
+.hero-h{font-family:var(--fd);font-size:clamp(2.8rem,7vw,6rem);font-weight:900;color:var(--cream);line-height:1.05;margin-bottom:1.2rem;opacity:0;animation:fu .8s .4s forwards;}
+.hero-h span{color:var(--os);}
+.hero-sub{font-size:clamp(.85rem,2vw,1rem);color:var(--sand);max-width:480px;line-height:1.7;margin-bottom:2rem;opacity:0;animation:fu .8s .6s forwards;}
+.hero-creator{font-family:var(--fm);font-size:1rem;color:var(--sand);letter-spacing:.08em;margin-bottom:1.2rem;font-weight:600;opacity:0;animation:fu .8s .8s forwards;}
+.hero-creator a{color:var(--sand);text-decoration:none;font-weight:700;display:inline-block;transition:transform .15s ease;}
+.hero-creator a:hover{transform:scale(1.06);}
+
+.hero-btn{display:inline-block;padding:.85rem 2.2rem;background:var(--om);color:var(--cream);font-family:var(--fm);font-size:.75rem;letter-spacing:.2em;text-decoration:none;border:none;cursor:pointer;transition:all .2s;opacity:0;animation:fu .8s 1s forwards;}
+.hero-btn:hover{background:var(--os);transform:translateY(-2px);}
+@keyframes fu{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.sec-label{font-family:var(--fm);font-size:.65rem;letter-spacing:.3em;color:var(--om);text-transform:uppercase;margin-bottom:.75rem;}
+#desk-section{background:var(--cream);padding:5rem 0 3rem;}
+.desk-hdr{text-align:center;padding:0 2rem 2.5rem;}
+.desk-title{font-family:var(--fd);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--bd);}
+.desk-wrap{position:relative;max-width:1200px;margin:0 auto;padding:0 1rem;}
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(44,24,16,.65);z-index:1000;align-items:center;justify-content:center;padding:1rem;backdrop-filter:blur(4px);}
+.modal-ov.open{display:flex;}
+.modal{background:var(--ww);max-width:440px;width:100%;padding:2.5rem;position:relative;animation:min .25s ease;max-height:90vh;overflow-y:auto;border-radius:2px;}
+@keyframes min{from{opacity:0;transform:scale(.95) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.m-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--bl);}
+.m-cat{font-family:var(--fm);font-size:.6rem;letter-spacing:.25em;color:var(--om);margin-bottom:.5rem;}
+.m-name{font-family:var(--fd);font-size:1.6rem;font-weight:700;color:var(--bd);margin-bottom:.6rem;}
+.m-desc{font-size:.875rem;color:var(--bm);line-height:1.65;margin-bottom:.8rem;}
+.m-why{font-size:.8rem;color:var(--bl);font-style:italic;border-left:2px solid var(--os);padding-left:.75rem;margin-bottom:1rem;line-height:1.6;}
+.m-rat{color:var(--om);font-size:.9rem;margin-bottom:1.2rem;}
+.m-acts{display:flex;gap:.75rem;flex-wrap:wrap;}
+.btn-buy{flex:1;padding:.8rem 1.2rem;background:var(--bd);color:var(--cream);font-family:var(--fm);font-size:.7rem;letter-spacing:.15em;border:none;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:.4rem;transition:all .2s;}
+.btn-buy:hover{background:var(--om);}
+.btn-add{flex:1;padding:.8rem 1.2rem;background:transparent;color:var(--bd);font-family:var(--fm);font-size:.7rem;letter-spacing:.1em;border:1.5px solid var(--bd);cursor:pointer;transition:all .2s;}
+.btn-add:hover,.btn-add.added{background:var(--beige);}
+.m-ext{margin-top:.6rem;font-size:.65rem;color:var(--bl);font-family:var(--fm);}
+.m-clk{font-family:var(--fm);font-size:.65rem;color:var(--bl);margin-top:.5rem;}
+.bsheet{display:none;position:fixed;bottom:0;left:0;right:0;background:var(--ww);z-index:1000;padding:2rem 1.5rem 3rem;transform:translateY(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);max-height:70vh;overflow-y:auto;border-radius:16px 16px 0 0;box-shadow:0 -8px 40px rgba(44,24,16,.2);}
+.bsheet.open{transform:translateY(0);}
+.bs-handle{width:40px;height:4px;background:var(--sand);border-radius:2px;margin:0 auto 1.5rem;}
+#products-section{background:var(--ww);padding:5rem 2rem;}
+.prod-hdr{text-align:center;margin-bottom:3rem;}
+.prod-title{font-family:var(--fd);font-size:clamp(1.8rem,4vw,2.8rem);font-weight:700;color:var(--bd);margin-bottom:.5rem;}
+.filters{display:flex;gap:.5rem;flex-wrap:wrap;justify-content:center;margin-bottom:2.5rem;}
+.fb{padding:.45rem 1rem;font-family:var(--fm);font-size:.65rem;letter-spacing:.12em;border:1.5px solid var(--sand);background:transparent;color:var(--bl);cursor:pointer;transition:all .2s;border-radius:2px;}
+.fb.active,.fb:hover{background:var(--bd);color:var(--cream);border-color:var(--bd);}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.5rem;max-width:1200px;margin:0 auto;}
+.pcard{background:var(--cream);padding:1.8rem;cursor:pointer;transition:all .25s;border:1px solid transparent;position:relative;overflow:hidden;opacity:0;animation:cin .4s forwards;}
+.pcard:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(44,24,16,.12);border-color:var(--sand);}
+@keyframes cin{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.p-cat{font-family:var(--fm);font-size:.6rem;letter-spacing:.2em;color:var(--om);margin-bottom:.5rem;}
+.p-name{font-family:var(--fd);font-size:1.1rem;font-weight:700;color:var(--bd);margin-bottom:.5rem;}
+.p-desc{font-size:.8rem;color:var(--bl);line-height:1.6;margin-bottom:1rem;}
+.p-foot{display:flex;align-items:center;justify-content:space-between;}
+.p-link{font-family:var(--fm);font-size:.65rem;letter-spacing:.1em;color:var(--bd);text-decoration:none;display:flex;align-items:center;gap:.3rem;transition:color .2s;}
+.p-link:hover{color:var(--om);}
+.p-add{font-family:var(--fm);font-size:.6rem;background:none;border:1px solid var(--sand);color:var(--bl);padding:.3rem .6rem;cursor:pointer;transition:all .2s;border-radius:2px;}
+.p-add:hover,.p-add.added{background:var(--beige);color:var(--bd);border-color:var(--bl);}
+.top-badge{position:absolute;top:.8rem;right:.8rem;font-family:var(--fm);font-size:.55rem;letter-spacing:.1em;background:var(--om);color:var(--cream);padding:.2rem .5rem;border-radius:2px;}
+#setup-sb{position:fixed;top:0;right:-420px;width:min(400px,90vw);height:100vh;background:var(--ww);z-index:2000;padding:2rem;overflow-y:auto;transition:right .3s cubic-bezier(.4,0,.2,1);box-shadow:-8px 0 40px rgba(44,24,16,.15);}
+#setup-sb.open{right:0;}
+.sb-ov{display:none;position:fixed;inset:0;background:rgba(44,24,16,.4);z-index:1999;}
+.sb-ov.open{display:block;}
+.sb-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;}
+.sb-title{font-family:var(--fd);font-size:1.4rem;font-weight:700;color:var(--bd);}
+.sb-close{background:none;border:none;font-size:1.3rem;cursor:pointer;color:var(--bl);}
+.sb-item{display:flex;align-items:center;justify-content:space-between;padding:.9rem 0;border-bottom:1px solid var(--beige);}
+.sb-iname{font-size:.875rem;font-weight:500;color:var(--bd);}
+.sb-icat{font-family:var(--fm);font-size:.6rem;color:var(--om);letter-spacing:.1em;}
+.sb-rem{background:none;border:none;cursor:pointer;color:var(--bl);font-size:.8rem;padding:.2rem .4rem;transition:color .2s;}
+.sb-rem:hover{color:var(--om);}
+.sb-clear{margin-top:1.5rem;width:100%;padding:.75rem;background:transparent;border:1.5px solid var(--sand);font-family:var(--fm);font-size:.65rem;letter-spacing:.15em;cursor:pointer;color:var(--bl);transition:all .2s;}
+.sb-clear:hover{border-color:var(--bd);color:var(--bd);}
+.sb-empty{font-size:.875rem;color:var(--bl);font-style:italic;text-align:center;padding:2rem 0;}
+#fab{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--bd);color:var(--cream);font-family:var(--fm);font-size:.65rem;letter-spacing:.1em;padding:.75rem 1.2rem;border:none;cursor:pointer;z-index:1500;transition:all .2s;display:flex;align-items:center;gap:.5rem;border-radius:2px;box-shadow:0 4px 20px rgba(44,24,16,.3);}
+#fab:hover{background:var(--om);}
+.fab-n{background:var(--os);color:var(--bd);border-radius:50%;width:18px;height:18px;font-size:.6rem;display:flex;align-items:center;justify-content:center;font-weight:600;}
+#footer{background:var(--bd);color:var(--sand);padding:3rem 2rem;text-align:center;}
+.ft-name{font-family:var(--fd);font-size:1.5rem;font-weight:700;color:var(--cream);margin-bottom:.25rem;}
+.ft-name a, .ft-h a { color: var(--sand); text-decoration: none; font-weight:700; display:inline-block; transition:transform .15s ease; }
+.ft-name a:hover, .ft-h a:hover { transform:scale(1.06); }
+
+.ft-h{font-family:var(--fm);font-size:.7rem;letter-spacing:.15em;color:var(--os);margin-bottom:1.5rem;}
+.ft-links{display:flex;gap:1.5rem;justify-content:center;margin-bottom:1.5rem;}
+.ft-links a{font-family:var(--fm);font-size:.7rem;letter-spacing:.12em;color:var(--sand);text-decoration:none;transition:color .2s;}
+.ft-links a:hover{color:var(--os);}
+.ft-tag{font-size:.8rem;color:var(--bl);font-style:italic;margin-bottom:1.5rem;}
+.vc{font-family:var(--fm);font-size:.7rem;color:var(--bl);letter-spacing:.1em;}
+@media(max-width:768px){.hs{width:32px;height:32px;}.hs-dot{width:14px;height:14px;}.modal-ov{display:none!important;}.bsheet{display:block;}.cgrid{grid-template-columns:1fr;}}
+@media(min-width:769px){.bsheet{display:none!important;}}
+</style></head><body>
+<section id="hero">
+  <p class="eyebrow">MY DESK SETUP</p>
+  <h1 class="hero-h">The Setup Behind<br><span>the Screen.</span></h1>
+  <p class="hero-sub">Everything I use to build, debug, work, and occasionally question why the code worked yesterday.</p>
+  <p class="hero-creator"><a href="https://instagram.com/vaibhav.unscripted" target="_blank" rel="noopener">Vaibhav</a> &middot; <a href="https://instagram.com/vaibhav.unscripted" target="_blank" rel="noopener">@vaibhav.unscripted</a></p>
+  <a href="#desk-section" class="hero-btn">EXPLORE THE SETUP &#8595;</a>
+</section>
+<section id="products-section">
+  <div class="prod-hdr"><p class="sec-label">EVERYTHING ON MY DESK</p><h2 class="prod-title">The Full Catalogue.</h2></div>
+  <div class="filters">
+    <button class="fb active" data-f="ALL">ALL</button>
+    <button class="fb" data-f="WORK">WORK</button>
+    <button class="fb" data-f="TECH">TECH</button>
+    <button class="fb" data-f="ERGONOMICS">ERGONOMICS</button>
+    <button class="fb" data-f="LIGHTING">LIGHTING</button>
+    <button class="fb" data-f="CABLE MANAGEMENT">CABLE MGMT</button>
+    <button class="fb" data-f="DESK DECOR">DESK DECOR</button>
+  </div>
+  <div class="cgrid" id="cgrid"></div>
+</section>
+<footer id="footer">
+  <p class="ft-name"><a href="https://instagram.com/vaibhav.unscripted" target="_blank" rel="noopener">Vaibhav</a></p>
+  <p class="ft-h"><a href="https://instagram.com/vaibhav.unscripted" target="_blank" rel="noopener">@vaibhav.unscripted</a></p>
+  <div class="ft-links">
+    <a href="https://instagram.com/vaibhav.unscripted" target="_blank" id="ig-lnk" rel="noopener">Instagram</a>
+    <a href="#" id="ft-setup">My Setup</a>
+  </div>
+  <p class="ft-tag">Built for long coding sessions, good coffee &amp; fewer cable disasters.</p>
+  <p class="vc" id="vc">&#128064; Visitors: &mdash;</p>
+</footer>
+<div class="modal-ov" id="mov">
+  <div class="modal">
+    <button class="m-close" id="mc">&#215;</button>
+    <p class="m-cat" id="mcat"></p>
+    <h2 class="m-name" id="mname"></h2>
+    <p class="m-desc" id="mdesc"></p>
+    <p class="m-why" id="mwhy"></p>
+    <div class="m-rat" id="mrat"></div>
+    <div class="m-acts">
+      <a class="btn-buy" id="mbuy" href="#" target="_blank" rel="noopener">VIEW / BUY &#8594;</a>
+      <button class="btn-add" id="madd">+ ADD TO MY SETUP</button>
+    </div>
+    <p class="m-ext">&#8599; Opens on an external shopping website</p>
+    <p class="m-clk" id="mclk"></p>
+  </div>
+</div>
+<div class="bsheet" id="bs">
+  <div class="bs-handle"></div>
+  <button onclick="cbs()" style="position:absolute;top:1rem;right:1.2rem;background:none;border:none;font-size:1.3rem;cursor:pointer;color:#8B6347">&#215;</button>
+  <p class="m-cat" id="bscat"></p>
+  <h2 class="m-name" id="bsname" style="font-size:1.3rem;margin-bottom:.5rem"></h2>
+  <p class="m-desc" id="bsdesc" style="font-size:.8rem;color:#5C3D2E;line-height:1.6;margin-bottom:.6rem"></p>
+  <p class="m-why" id="bswhy" style="font-size:.75rem;color:#8B6347;font-style:italic;border-left:2px solid #E8845A;padding-left:.75rem;margin-bottom:.8rem;line-height:1.5"></p>
+  <div class="m-rat" id="bsrat" style="margin-bottom:1rem"></div>
+  <div class="m-acts">
+    <a class="btn-buy" id="bsbuy" href="#" target="_blank" rel="noopener">VIEW / BUY &#8594;</a>
+    <button class="btn-add" id="bsadd">+ ADD</button>
+  </div>
+  <p class="m-ext">&#8599; External shopping website</p>
+</div>
+<div class="sb-ov" id="sbov" onclick="csb()"></div>
+<div id="setup-sb">
+  <div class="sb-hdr"><h3 class="sb-title">My Setup</h3><button class="sb-close" onclick="csb()">&#215;</button></div>
+  <div id="sbitems"></div>
+  <button class="sb-clear" onclick="clrSetup()">CLEAR ALL</button>
+</div>
+<button id="fab" onclick="osb()">&#128203; MY SETUP <span class="fab-n" id="fabn">0</span></button>
+<script>
+var vsCounts={};var siteVisits=0;
+var LS="landscape.png";
+var PS="potrait.png";
+
+var P=[
+  {id:"chair",name:"Wakefit Gravita Chair",cat:"ERGONOMICS",desc:"Ergonomic mesh chair built for long hours. Lumbar support that actually works.",why:"My back used to hate me. Now it does not. The Gravita changed how I sit through 8-hour deep work sessions.",r:5,url:"https://amzn.in/d/0bkpwUQ1",lx:28,ly:68,px:30,py:72},
+  {id:"desk",name:"48-inch Desk",cat:"ERGONOMICS",desc:"Wide enough for a monitor, laptop, and still having room to think.",why:"Anything shorter than 48 inches feels like working on a cutting board. Depth matters as much as width.",r:5,url:"https://amzn.in/d/0e9Pcw3d",lx:55,ly:58,px:55,py:62},
+  {id:"monitor",name:"Monitor",cat:"WORK",desc:"Main display for coding and multitasking. Real estate for real work.",why:"One good external monitor beats two mediocre ones. I run my IDE on this and rarely look away.",r:5,url:"https://amzn.in/d/08MNiTIt",lx:45,ly:30,px:45,py:33},
+  {id:"laptop",name:"MacBook / Laptop",cat:"WORK",desc:"The brain of the operation. Paired with a stand for the perfect height.",why:"MacBook plus external monitor is my daily driver. Clean, fast, zero drama.",r:5,url:"https://amzn.in/d/05V5mLJG",lx:66,ly:36,px:68,py:40},
+  {id:"laptop-stand",name:"Laptop Stand",cat:"ERGONOMICS",desc:"Raises the laptop to eye level. Cleaner desk, better posture.",why:"Without a stand my laptop would just be an expensive keyboard shelf. Raises it perfectly.",r:4,url:"https://amzn.in/d/08aqB5Oy",lx:69,ly:43,px:71,py:47},
+  {id:"keyboard",name:"Wireless Keyboard",cat:"TECH",desc:"Compact, quiet, and stays charged for weeks. My primary daily driver.",why:"Switched to wireless and never looked back. Clean desk, zero cable drag.",r:5,url:"https://amzn.in/d/06ABeJcN",lx:43,ly:49,px:44,py:54},
+  {id:"keyboard-mat",name:"Keyboard Mat",cat:"DESK DECOR",desc:"Full-desk mat that ties the whole setup together aesthetically.",why:"The mat is underrated. It protects the desk and makes everything feel intentional.",r:4,url:"https://amzn.in/d/0cG3dwk2",lx:43,ly:54,px:44,py:59},
+  {id:"usb-hub",name:"USB-C Hub / Dock",cat:"TECH",desc:"One cable in, everything out. Powers the whole desk from a single USB-C.",why:"The hub is the silent hero of my setup. All peripherals, one port.",r:5,url:"https://amzn.in/d/0aJGSgHa",lx:57,ly:51,px:59,py:55},
+  {id:"webcam",name:"Webcam",cat:"TECH",desc:"Crisp 1080p video for calls. Because built-in cameras are embarrassing.",why:"People started commenting on my video quality. Worth every rupee.",r:4,url:"https://amzn.in/d/0gWtBQDr",lx:46,ly:21,px:48,py:24},
+  {id:"headphones",name:"Wireless Headphones",cat:"TECH",desc:"Over-ear noise cancelling. For when the world needs to go quiet.",why:"ANC on plus lo-fi music equals deep focus mode activated. No distractions allowed.",r:5,url:"https://amzn.in/d/0fnrnaYW",lx:73,ly:62,px:75,py:66},
+  {id:"headphone-hanger",name:"Headphone Hanger",cat:"DESK DECOR",desc:"Keeps headphones off the desk and always within reach.",why:"Small thing, big impact. Headphones always in the same spot, desk stays clean.",r:4,url:"https://amzn.in/d/07UxBAn4",lx:72,ly:57,px:74,py:61},
+  {id:"monitor-light",name:"Monitor Bar Light",cat:"LIGHTING",desc:"Bias lighting that does not cause glare. Gentle on the eyes during late nights.",why:"Reduces eye strain significantly. Plus it makes the setup look cinematic at night.",r:5,url:"https://amzn.in/d/05BbJirD",lx:46,ly:17,px:48,py:19},
+  {id:"bottle-lamp",name:"Bottle Lamp",cat:"LIGHTING",desc:"Warm ambient glow. The vibe setter of the desk.",why:"This single lamp changed the mood of my entire room. Cozy, warm, perfect.",r:5,url:"https://amzn.in/d/04OUQoro",lx:33,ly:42,px:31,py:47},
+  {id:"floor-lamp",name:"Floor Lamp",cat:"LIGHTING",desc:"Tripod-style floor lamp. Fills the room with warm indirect light.",why:"Overhead lights kill the vibe. The floor lamp keeps things warm and focused.",r:4,url:"https://amzn.in/d/09FJIc56",lx:13,ly:38,px:11,py:41},
+  {id:"smart-bulb",name:"Smart Bulb",cat:"LIGHTING",desc:"Control colour temperature from warm to cool. Adapts to the time of day.",why:"Warm in the evening, cool in the morning. My eyes love me for this.",r:4,url:"https://amzn.in/d/0boAZul9",lx:15,ly:33,px:13,py:36},
+  {id:"phone-stand",name:"Phone Stand",cat:"TECH",desc:"Keeps the phone upright and visible without occupying desk space.",why:"No more picking up the phone every notification. Glance and go back to work.",r:4,url:"https://amzn.in/d/0iN3vLeF",lx:73,ly:45,px:75,py:49},
+  {id:"power-ext",name:"Power Extension Box",cat:"CABLE MANAGEMENT",desc:"Enough outlets to power a small server room. Or just a desk.",why:"Never running out of sockets is a superpower.",r:4,url:"https://amzn.in/d/0djI9lmI",lx:79,ly:51,px:81,py:55},
+  {id:"cable-org",name:"Under-Desk Cable Organiser",cat:"CABLE MANAGEMENT",desc:"Hides the cable spaghetti under the desk. Clean top, chaos below.",why:"The illusion of a minimal setup requires hiding the cables. This does it perfectly.",r:5,url:"https://amzn.in/d/05r2NeI3",lx:50,ly:70,px:52,py:73},
+  {id:"smart-plug",name:"Smart Plug",cat:"CABLE MANAGEMENT",desc:"Schedule and control devices remotely. Automate the boring stuff.",why:"My monitor turns off automatically at midnight. Zero effort, zero wasted power.",r:4,url:"https://amzn.in/d/0agc69W8",lx:80,ly:44,px:82,py:47},
+  {id:"planter",name:"Desk Planter",cat:"DESK DECOR",desc:"A small plant to keep things alive on the desk. Both literally and emotionally.",why:"Plants reduce stress. Science said so. I listened.",r:4,url:"https://amzn.in/d/00ltaa2q",lx:22,ly:51,px:20,py:54},
+  {id:"power-bank",name:"Power Bank",cat:"TECH",desc:"High-capacity backup power. Because meetings on the balcony are real.",why:"Taking the laptop outside means needing backup power. This handles it.",r:4,url:"https://amzn.in/d/038UKG4D",lx:68,ly:61,px:70,py:64},
+  {id:"decor",name:"Alexa - Smart Speaker",cat:"Tech",desc:"The little guy watching over the code. Mascot energy only.",why:"Every setup needs a personality piece. Alex brings the soul.",r:5,url:"https://amzn.in/d/0baovhK8",lx:37,ly:47,px:36,py:51}
+];
+function gS(){try{return JSON.parse(localStorage.getItem("vs_s")||"[]");}catch(e){return[];}}
+function sS(a){localStorage.setItem("vs_s",JSON.stringify(a));}
+function gC(){return {};}
+function svC(o){}
+function incC(id){}
+function topId(){return null;}
+function initV(){}
+function mob(){return window.innerWidth<=768;}
+function strs(n){return"★".repeat(n)+"☆".repeat(5-n);}
+var cid=null;
+function op(id){
+  var p=P.find(function(x){return x.id===id;});if(!p)return;cid=id;
+  var s=gS(),ins=s.indexOf(id)>-1,c=gC(),cnt=c[id]||0;
+  if(mob()){
+    document.getElementById("bscat").textContent=p.cat;
+    document.getElementById("bsname").textContent=p.name;
+    document.getElementById("bsdesc").textContent=p.desc;
+    document.getElementById("bswhy").textContent='"'+p.why+'"';
+    document.getElementById("bsrat").textContent=strs(p.r);
+    document.getElementById("bsbuy").href=p.url;
+    var ba=document.getElementById("bsadd");
+    ba.textContent=ins?"\u2713 ADDED":"+ ADD";ba.className="btn-add"+(ins?" added":"");
+    ba.onclick=function(){tgl(id,ba,false);};
+    document.getElementById("bs").classList.add("open");
+  } else {
+    document.getElementById("mcat").textContent=p.cat;
+    document.getElementById("mname").textContent=p.name;
+    document.getElementById("mdesc").textContent=p.desc;
+    document.getElementById("mwhy").textContent='"'+p.why+'"';
+    document.getElementById("mrat").textContent=strs(p.r);
+    document.getElementById("mbuy").href=p.url;
+    document.getElementById("mclk").textContent=cnt>0?("Explored "+cnt+" time"+(cnt>1?"s":"")+" on this browser"):"";
+    var ma=document.getElementById("madd");
+    ma.textContent=ins?"\u2713 IN MY SETUP":"+ ADD TO MY SETUP";ma.className="btn-add"+(ins?" added":"");
+    ma.onclick=function(){tgl(id,ma,true);};
+    document.getElementById("mov").classList.add("open");
+  }
+}
+function cm(){document.getElementById("mov").classList.remove("open");}
+function cbs(){document.getElementById("bs").classList.remove("open");}
+document.getElementById("mc").onclick=cm;
+document.getElementById("mov").onclick=function(e){if(e.target===this)cm();};
+document.getElementById("mbuy").onclick=function(){};
+document.getElementById("bsbuy").onclick=function(){};
+function tgl(id,btn,isMod){
+  var s=gS(),i=s.indexOf(id);
+  if(i>-1){s.splice(i,1);btn.textContent=isMod?"+ ADD TO MY SETUP":"+ ADD";btn.classList.remove("added");}
+  else{s.push(id);btn.textContent=isMod?"\u2713 IN MY SETUP":"\u2713 ADDED";btn.classList.add("added");}
+  sS(s);uFab();rSB();rCards();
+}
+function uFab(){document.getElementById("fabn").textContent=gS().length;}
+function osb(){rSB();document.getElementById("setup-sb").classList.add("open");document.getElementById("sbov").classList.add("open");}
+function csb(){document.getElementById("setup-sb").classList.remove("open");document.getElementById("sbov").classList.remove("open");}
+function clrSetup(){sS([]);uFab();rSB();rCards();}
+document.getElementById("ft-setup").onclick=function(e){e.preventDefault();osb();};
+// helper: extract ASIN and craft a media image URL (best-effort)
+function getASIN(u){try{if(!u) return null; var m=u.match(/\/dp\/([A-Z0-9]{10})/i)||u.match(/\/gp\/product\/([A-Z0-9]{10})/i)||u.match(/\/product\/([A-Z0-9]{10})/i)||u.match(/\/([A-Z0-9]{10})(?:[\/?]|$)/i); return m?m[1]:null;}catch(e){return null;}}
+function getProdImg(u){var a=getASIN(u); if(!a) return ''; return 'https://m.media-amazon.com/images/I/'+a+'._AC_SY200_.jpg';}
+
+function rSB(){
+
+  var s=gS(),el=document.getElementById("sbitems");
+  if(!s.length){el.innerHTML='<p class="sb-empty">Nothing added yet.<br>Click items on the desk to explore.</p>';return;}
+  el.innerHTML=s.map(function(id){
+    var p=P.find(function(x){return x.id===id;});if(!p)return"";
+    return '<div class="sb-item"><div><p class="sb-iname">'+p.name+'</p><p class="sb-icat">'+p.cat+'</p></div><button class="sb-rem" onclick="ri(\''+ id +'\')">&times;</button></div>';
+  }).join("");
+}
+function ri(id){var s=gS().filter(function(x){return x!==id;});sS(s);uFab();rSB();rCards();}
+var cf="ALL";
+function rCards(f){
+  if(f!==undefined)cf=f;
+  var ti=topId(),s=gS(),c=gC();
+  var list=cf==="ALL"?P:P.filter(function(p){return p.cat===cf;});
+  document.getElementById("cgrid").innerHTML=list.map(function(p,i){
+    var ins=s.indexOf(p.id)>-1,isT=p.id===ti&&(c[p.id]||0)>0;
+    var placeholder='';
+    return '<div class="pcard" style="animation-delay:'+(i*.04)+'s" onclick="op(\''+ p.id +'\')">'+
+      
+
+      '<p class="p-cat">'+p.cat+'</p><h3 class="p-name">'+p.name+'</h3><p class="p-desc">'+p.desc+'</p>'+
+      '<div class="p-foot"><a class="p-link" href="'+p.url+'" target="_blank" rel="noopener" onclick="event.stopPropagation();">VIEW PRODUCT &#8594;</a>'+
+      '<button class="p-add'+(ins?" added":"")+'" onclick="event.stopPropagation();tca(\''+ p.id +'\',this)">'+( ins?"&#10003; ADDED":"+ ADD")+'</button></div></div>';
+  }).join("");
+}
+function tca(id,btn){
+  var s=gS(),i=s.indexOf(id);
+  if(i>-1){s.splice(i,1);btn.textContent="+ ADD";btn.classList.remove("added");}
+  else{s.push(id);btn.innerHTML="&#10003; ADDED";btn.classList.add("added");}
+  sS(s);uFab();rSB();
+}
+document.querySelectorAll(".fb").forEach(function(b){
+  b.onclick=function(){
+    document.querySelectorAll(".fb").forEach(function(x){x.classList.remove("active");});
+    this.classList.add("active");rCards(this.dataset.f);
+  };
+});
+document.getElementById("ig-lnk").onclick=function(){var n=parseInt(localStorage.getItem("vs_ig")||"0")+1;localStorage.setItem("vs_ig",n);};
+window.addEventListener("load",function(){initV();rCards();uFab();rSB();});
+window.op=op;window.cbs=cbs;window.csb=csb;window.osb=osb;window.clrSetup=clrSetup;window.ri=ri;window.incC=incC;window.rCards=rCards;window.tca=tca;
+</script></body></html>
